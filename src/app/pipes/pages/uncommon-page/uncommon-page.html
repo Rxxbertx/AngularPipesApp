@@ -1,1 +1,102 @@
-<p>uncommon-page works!</p>
+<section class="mx-5">
+  <h1 class="text-2xl font-bold">Uncommon Pipes</h1>
+  <h3 class="text-xl font-thin">Included in Angular</h3>
+</section>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <app-card title="i18nSelectPipe">
+
+    <p>Hi {{ client().name }} its a pleasure to invite you {{ client().gender | i18nSelect:invitatonMap }} to our
+      event</p>
+
+    <button class="btn btn-primary" (click)="changeClient()">Change client</button>
+  </app-card>
+
+  <app-card title="i18nPluralPipe">
+
+    <p>
+
+      Actually we have {{ clients().length | i18nPlural:clientsMap() }}
+
+    </p>
+
+    <button class="btn btn-primary" (click)="deleteClient()"
+            [disabled]="clients().length<=0"
+    >Delete client
+    </button>
+  </app-card>
+
+  <app-card title="SlicePipe">
+
+    <b>Original</b>
+    <p class="text-primary">
+      {{ clients().join(",  ") }}
+    </p>
+
+    <b class="mt-2">
+      Slice:0:2
+    </b>
+    <p class="text-primary">
+      {{ clients()|slice:0:2 }}
+    </p>
+
+    <b class="mt-2">
+      Slice:1:2
+    </b>
+    <p class="text-primary">
+      {{ clients()|slice:1:2 }}
+    </p>
+  </app-card>
+
+  <app-card title="JsonPipe">
+
+    <pre class="text-primary">
+
+      {{ clients() | json }}
+
+    </pre>
+
+  </app-card>
+
+  <app-card title="KeyValuePipe">
+
+    <pre class="text-primary">
+
+      {{ profile | keyvalue | json }}
+
+    </pre>
+
+    <ul>
+      @for (item of profile | keyvalue; track item) {
+        <li>
+          <strong class="text-primary">{{ item.key | titlecase }}</strong>
+          <span>
+          {{ item.value | titlecase }}
+        </span>
+        </li>
+      }
+
+    </ul>
+
+  </app-card>
+
+  <app-card title="AsyncPipe">
+
+    <p class="text-primary">
+
+      {{ promiseValue | async }}
+
+    </p>
+
+    @if (promiseValue | async; as value) {
+      <p class="text-primary">
+        value
+      </p>
+    }
+
+    <h3 class="text-xl">Observable</h3>
+    <p>{{myObservableTimer | async}}</p>
+
+  </app-card>
+
+</div>

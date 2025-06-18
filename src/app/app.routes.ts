@@ -22,6 +22,10 @@ export const routes: Routes = [
     title: 'Custom Pipes',
     loadComponent: () => import('./pipes/pages/custom-page/custom-page')
   },
+  {
+    path: '**',
+    redirectTo: 'basic'
+  }
 
 
 ];
