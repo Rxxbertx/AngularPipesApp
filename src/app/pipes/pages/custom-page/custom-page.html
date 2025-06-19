@@ -14,13 +14,24 @@
 <div class="divider my-2"></div>
 
 <section class="my-2">
-  <h1 class="text-2xl font-bold">Personalized pipes in action</h1>
-  <div class="flex gap-2 justify-end w-full">
 
-    <button class="btn btn-primary">By Name</button>
-    <button class="btn btn-accent">By Fly</button>
-    <button class="btn btn-secondary">By Color</button>
-    <button class="btn btn-info">By Creator</button>
+  <h1 class="text-2xl font-bold">Filtered by : {{searchQuery()}} Sorted by: {{ sortBy() }}</h1>
+
+
+  <div class="flex gap-2 justify-end w-full mt-2">
+
+
+    <input type="text" class="input input-bordered w-full max-w-xs " placeholder="Search Hero"
+           #txtSearch
+           (input)="searchQuery.set(txtSearch.value)"
+    >
+
+    <div class="flex flex-1"></div>
+
+    <button class="btn btn-primary" (click)="sortBy.set('name')">By Name</button>
+    <button class="btn btn-accent" (click)="sortBy.set('canFly')">By Fly</button>
+    <button class="btn btn-secondary" (click)="sortBy.set('color')">By Color</button>
+    <button class="btn btn-info" (click)="sortBy.set('creator')">By Creator</button>
 
   </div>
 </section>
@@ -38,8 +49,7 @@
     </thead>
     <tbody>
 
-      @for (hero of heroes(); track hero.id; let i = $index) {
-
+      @for (hero of heroes() | filter:searchQuery() | heroSort:sortBy(); track hero.id; let i = $index) {
         <tr>
           <th>{{ i + 1 }}</th>
           <th>{{ hero.name }}</th>
@@ -48,15 +58,17 @@
             {{ hero.canFly | flyPipe }}
           </th>
           <th>
-            <span [style.color]="hero.color | colorTextPipe">
-              {{ hero.color | colorPipe:ColorMap }}
+            <span class="text-xs w-44" [style.color]="hero.color | colorTextPipe">
+              {{ hero.color | colorPipe | titlecase }}
             </span>
           </th>
-          <th>{{ hero.creator }}</th>
+          <th>
+            <span [class.text-primary]="hero.creator===0" [class.text-accent]="hero.creator===1">
+                          {{ hero.creator | heroCreator }}
+          </span>
+          </th>
         </tr>
-
       }
-
 
     </tbody>
   </table>

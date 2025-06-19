@@ -3,8 +3,12 @@ import {ToggleCasePipe} from '../../pipes/toggle-case-pipe';
 import {heroes} from '../../data/hero.data';
 import {FlyPipe,} from '../../pipes/fly-pipe-pipe';
 import {ColorPipe } from '../../pipes/color-pipe-pipe';
-import {ColorMap} from '../../interfaces/hero.interface';
+import {ColorMap, Hero} from '../../interfaces/hero.interface';
 import {ColorTextPipe} from '../../pipes/color-text-pipe-pipe';
+import {TitleCasePipe} from '@angular/common';
+import {HeroCreatorPipe} from '../../pipes/hero-creator-pipe';
+import {FilterPipe} from '../../pipes/filter-pipe';
+import {HeroSortPipe} from '../../pipes/hero-sort-pipe';
 
 @Component({
   selector: 'app-custom-page',
@@ -12,7 +16,11 @@ import {ColorTextPipe} from '../../pipes/color-text-pipe-pipe';
     ToggleCasePipe,
     FlyPipe,
     ColorPipe,
-    ColorTextPipe
+    ColorTextPipe,
+    TitleCasePipe,
+    HeroCreatorPipe,
+    FilterPipe,
+    HeroSortPipe
 
   ],
   templateUrl: './custom-page.html',
@@ -34,5 +42,16 @@ export default class CustomPage {
   heroes = signal(heroes)
 
 
-  protected readonly ColorMap = ColorMap;
+
+  //sort
+
+
+  sortBy = signal<keyof Hero | null>(null);
+
+  searchQuery= signal('')
+
+
+
+
+
 }
